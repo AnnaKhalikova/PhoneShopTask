@@ -78,8 +78,7 @@ namespace Homework_4
                     isShopNotFound = true;
                     Console.WriteLine("Магазин, который вы ввели не найден. Повторите попыткук ввода: ");                   
                 }
-            }
-            
+            }            
         }
     }
 }
