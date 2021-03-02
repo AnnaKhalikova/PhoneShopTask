@@ -17,13 +17,13 @@ namespace Homework_4
             Console.WriteLine("Какой телефон вы желаете приобрести");
             string model = Console.ReadLine();
             List<Phone> listOfPhones = ShopHelper.GetPhoneByModel(model, stores);
+            
+            var phoneForOrdering = new Phone();
             bool isModelNotFound = true;
 
             Console.WriteLine("Finded models:");
-            foreach(var item in listOfPhones)
-            {
-                Console.WriteLine("Model: " + item.Model + "ShopID" + item.ShopId);
-            }
+            ShopHelper.PrintAllAvailablePhones(listOfPhones);
+            
 
             while (isModelNotFound)
             {
@@ -36,10 +36,11 @@ namespace Homework_4
                     listOfPhones = ShopHelper.GetPhoneByModel(model, stores);
                 }
                 else if (listOfPhones.Count != 0 )
-                {
+                {                   
                     foreach (var phone in listOfPhones)
                     {
                         Console.WriteLine("Phone: " + phone.Model + "ShopId: " + phone.ShopId);
+                        phoneForOrdering = phone;
                     }
                     isModelNotFound = false;
                 }
@@ -52,10 +53,28 @@ namespace Homework_4
                     listOfPhones = ShopHelper.GetPhoneByModel(model, stores);
                 }
             }
-            
-            
 
+            bool isShopNotFound = true;
+            Console.WriteLine($"В каком магазине вы хотите приобрести {listOfPhones[0].Model} ?");
+            string shopName = Console.ReadLine();
 
+            while (isShopNotFound)
+            {
+                if (ShopHelper.GetShop(stores, shopName) != null)
+                {
+                    if (ShopHelper.CheckIsModelAvailableAtShop(model, ShopHelper.GetShop(stores, shopName)){
+                        Console.WriteLine($"Заказ {phoneForOrdering.Model} на сумму {phoneForOrdering.Price} успешно оформлен!");
+                    }
+                    isShopNotFound = false;
+                }
+                else
+                {
+                    isShopNotFound = true;
+                    Console.WriteLine("Магазин, который вы ввели не найден. Повторите попыткук ввода: ");
+                    shopName = Console.ReadLine();
+                }
+            }
+            
         }
     }
 }

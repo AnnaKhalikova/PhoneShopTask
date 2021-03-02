@@ -19,7 +19,6 @@ namespace Homework_4.Menu
 
             return amount;
         }
-
         public static List<Phone> GetPhoneByModel(string model, Stores stores)
         {
             var phones = new List<Phone>();
@@ -48,15 +47,34 @@ namespace Homework_4.Menu
                 Console.WriteLine("Android Phones amount: " + GetPhonesByOperationSystem(store, OperationSystemType.ANDROID));
             }
         }
-        public static List<Shop> GetShop(Stores stores)
+        public static Shop GetShop(Stores stores, string shopName)
         {
-            var shops = new List<Shop>();
-            foreach (var shop in stores.Shops)
+            var shop = new Shop();
+            foreach (var item in stores.Shops)
             {
-                shops.Add(shop);
+                if(item.Name == shopName)
+                {
+                    shop = item;
+                }
             }
 
-            return shops;
+            return shop;
+        }
+        public static bool CheckIsModelAvailableAtShop(string model, Shop shop)
+        {
+            foreach(var phone in shop.Phones)
+            {
+                if (phone.Model == model && phone.IsAvailable)
+                    return true;
+            }
+            return false;
+        }
+        public static void PrintAllAvailablePhones(List<Phone> listOfPhones)
+        {
+            foreach (var item in listOfPhones)
+            {
+                Console.WriteLine("Model: " + item.Model + "ShopID" + item.ShopId);
+            }
         }
     }
 }
