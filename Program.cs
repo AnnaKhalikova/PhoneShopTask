@@ -62,7 +62,7 @@ namespace Homework_4
             {
                 if (ShopHelper.GetShop(stores, shopName) != null)
                 {
-                    if (ShopHelper.CheckIsModelAvailableAtShop(model, ShopHelper.GetShop(stores, shopName)){
+                    if (ShopHelper.CheckIsModelAvailableAtShop(model, ShopHelper.GetShop(stores, shopName))){
                         Console.WriteLine($"Заказ {phoneForOrdering.Model} на сумму {phoneForOrdering.Price} успешно оформлен!");
                     }
                     isShopNotFound = false;
