@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Homework_4.Exceptions;
 using Homework_4.Models;
 
 namespace Homework_4.Menu
@@ -26,13 +27,19 @@ namespace Homework_4.Menu
             {
                 foreach (var phone in shop.Phones)
                 {
-                    if (phone.Model == model)
+                    if (phone.Model == model && phone.IsAvailable)
                     {
                         phones.Add(phone);
                     }
+                    else if(phone.Model == model && !phone.IsAvailable)
+                    {
+                        throw new PhoneNotAvailableException();
+                    }
                 }
             }
-           
+            if(phones.Count == 0)
+                throw new PhoneNotFoundException();
+          
             return phones;
         }
         public static void PrintInfoAboutShops(Stores stores)
