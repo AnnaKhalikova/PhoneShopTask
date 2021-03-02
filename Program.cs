@@ -56,22 +56,27 @@ namespace Homework_4
 
             bool isShopNotFound = true;
             Console.WriteLine($"В каком магазине вы хотите приобрести {listOfPhones[0].Model} ?");
-            string shopName = Console.ReadLine();
+            string shopName = null;
 
             while (isShopNotFound)
             {
+                shopName = Console.ReadLine();
                 if (ShopHelper.GetShop(stores, shopName) != null)
-                {
+                {                  
                     if (ShopHelper.CheckIsModelAvailableAtShop(model, ShopHelper.GetShop(stores, shopName))){
                         Console.WriteLine($"Заказ {phoneForOrdering.Model} на сумму {phoneForOrdering.Price} успешно оформлен!");
+                        isShopNotFound = false;
                     }
-                    isShopNotFound = false;
+                    else
+                    {
+                        isShopNotFound = true;
+                        Console.WriteLine("Данная модель недоступна в выбранном вами магазине. Повторите выбор магазина");
+                    }                    
                 }
                 else
                 {
                     isShopNotFound = true;
-                    Console.WriteLine("Магазин, который вы ввели не найден. Повторите попыткук ввода: ");
-                    shopName = Console.ReadLine();
+                    Console.WriteLine("Магазин, который вы ввели не найден. Повторите попыткук ввода: ");                   
                 }
             }
             

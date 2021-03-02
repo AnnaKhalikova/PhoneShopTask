@@ -50,6 +50,7 @@ namespace Homework_4.Menu
         public static Shop GetShop(Stores stores, string shopName)
         {
             var shop = new Shop();
+            shop = null;
             foreach (var item in stores.Shops)
             {
                 if(item.Name == shopName)
@@ -64,8 +65,10 @@ namespace Homework_4.Menu
         {
             foreach(var phone in shop.Phones)
             {
-                if (phone.Model == model && phone.IsAvailable)
+                if (phone.Model == model && phone.IsAvailable == true)
+                {
                     return true;
+                }                    
             }
             return false;
         }
