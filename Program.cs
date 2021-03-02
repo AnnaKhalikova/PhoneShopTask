@@ -16,48 +16,51 @@ namespace Homework_4
             var stores = JsonConvert.DeserializeObject<Stores>(ExtendedJsonReader.ReadFile());
 
             //3 task with exception handling
-            Console.WriteLine("Какой телефон вы желаете приобрести");
-            string model = Console.ReadLine();
-            List<Phone> listOfPhones;
-            try
+            List<Phone> listOfPhones = new List<Phone>();
+            while (true)
             {
-                listOfPhones = ShopHelper.GetPhoneByModel(model, stores);
-            }
-            catch (PhoneNotAvailableException)
-            {
-                Console.WriteLine("Данный товар отсутствует на складе");
-            }
-            catch (PhoneNotFoundException)
-            {
-                Console.WriteLine("Введенный Вами товар не найден");
+                Console.WriteLine("Какой телефон вы желаете приобрести");
+                string model = Console.ReadLine();               
+                try
+                {
+                    listOfPhones = ShopHelper.GetPhoneByModel(model, stores);
+                    break;
+                }
+                catch (PhoneNotAvailableException)
+                {
+                    Console.WriteLine("Данный товар отсутствует на складе. Выберите, пожалуйста, другую модель: ");
+                }
+                catch (PhoneNotFoundException)
+                {
+                    Console.WriteLine("Введенный Вами товар не найден. Выберите, пожалуйста, другую модель: ");
+                }
             }
 
-       
-            //bool isShopNotFound = true;
-            //Console.WriteLine($"В каком магазине вы хотите приобрести {listOfPhones[0].Model} ?");
-            //string shopName = null;
 
-            //while (isShopNotFound)
-            //{
-            //    shopName = Console.ReadLine();
-            //    if (ShopHelper.GetShop(stores, shopName) != null)
-            //    {                  
-            //        if (ShopHelper.CheckIsModelAvailableAtShop(model, ShopHelper.GetShop(stores, shopName))){
-            //            Console.WriteLine($"Заказ {phoneForOrdering.Model} на сумму {phoneForOrdering.Price} успешно оформлен!");
-            //            isShopNotFound = false;
-            //        }
-            //        else
-            //        {
-            //            isShopNotFound = true;
-            //            Console.WriteLine("Данная модель недоступна в выбранном вами магазине. Повторите выбор магазина");
-            //        }                    
-            //    }
-            //    else
-            //    {
-            //        isShopNotFound = true;
-            //        Console.WriteLine("Магазин, который вы ввели не найден. Повторите попыткук ввода: ");                   
-            //    }
-            //}            
+            //4 task
+            Shop shop = new Shop();
+            while (true)
+            {             
+                Console.WriteLine($"В каком магазине вы хотите приобрести {listOfPhones[0].Model}?");
+                string shopName = Console.ReadLine();
+                try
+                {
+                    shop = ShopHelper.GetShop(stores, shopName);
+                    if (ShopHelper.CheckIsModelAvailableAtShop(listOfPhones[0].Model, shop))
+                        Console.WriteLine($"Заказ {listOfPhones[0].Model} на сумму {listOfPhones[0].Price} успешно оформлен!");
+                    else
+                        throw new PhoneNotAvailableException();
+                    break;
+                }
+                catch (ShopNotFoundException)
+                {
+                    Console.WriteLine("Магазин не найден! Повторите ввод названия магазина:");
+                }
+                catch (PhoneNotAvailableException)
+                {
+                    Console.WriteLine("Данная модель недоступна в магазине " + shop.Name + " . Пожалуйста, выберите другой магазин:");
+                }
+            }        
         }
     }
 }

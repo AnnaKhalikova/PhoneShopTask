@@ -60,12 +60,16 @@ namespace Homework_4.Menu
             shop = null;
             foreach (var item in stores.Shops)
             {
-                if(item.Name == shopName)
+                if (item.Name == shopName)
                 {
                     shop = item;
                 }
             }
-
+            if(shop == null)
+            {
+                throw new ShopNotFoundException();
+            }
+           
             return shop;
         }
         public static bool CheckIsModelAvailableAtShop(string model, Shop shop)
