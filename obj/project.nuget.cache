@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "XHaCrtRLaCtxq7t2vwqiiL458SGEQINm4Pa49nC33Uhc+Fev0Lo6QxDC+BZH76cMY624tV/QgVK85bZubnDMMw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\aikha\\Downloads\\Homework_4\\Homework_4.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\aikha\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}
