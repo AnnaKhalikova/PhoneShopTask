@@ -16,51 +16,10 @@ namespace Homework_4
             var stores = JsonConvert.DeserializeObject<Stores>(ExtendedJsonReader.ReadFile());
 
             //3 task with exception handling
-            List<Phone> listOfPhones = new List<Phone>();
-            while (true)
-            {
-                Console.WriteLine("Какой телефон вы желаете приобрести");
-                string model = Console.ReadLine();               
-                try
-                {
-                    listOfPhones = ShopHelper.GetPhoneByModel(model, stores);
-                    break;
-                }
-                catch (PhoneNotAvailableException)
-                {
-                    Console.WriteLine("Данный товар отсутствует на складе. Выберите, пожалуйста, другую модель: ");
-                }
-                catch (PhoneNotFoundException)
-                {
-                    Console.WriteLine("Введенный Вами товар не найден. Выберите, пожалуйста, другую модель: ");
-                }
-            }
-
+            List<Phone> listOfPhones = ShopHelper.ChoosePhoneModel(stores);
 
             //4 task
-            Shop shop = new Shop();
-            while (true)
-            {             
-                Console.WriteLine($"В каком магазине вы хотите приобрести {listOfPhones[0].Model}?");
-                string shopName = Console.ReadLine();
-                try
-                {
-                    shop = ShopHelper.GetShop(stores, shopName);
-                    if (ShopHelper.CheckIsModelAvailableAtShop(listOfPhones[0].Model, shop))
-                        Console.WriteLine($"Заказ {listOfPhones[0].Model} на сумму {listOfPhones[0].Price} успешно оформлен!");
-                    else
-                        throw new PhoneNotAvailableException();
-                    break;
-                }
-                catch (ShopNotFoundException)
-                {
-                    Console.WriteLine("Магазин не найден! Повторите ввод названия магазина:");
-                }
-                catch (PhoneNotAvailableException)
-                {
-                    Console.WriteLine("Данная модель недоступна в магазине " + shop.Name + " . Пожалуйста, выберите другой магазин:");
-                }
-            }        
+            ShopHelper.OrderPhone(listOfPhones[0], stores);
         }
     }
 }
